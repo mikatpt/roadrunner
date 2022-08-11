@@ -3,7 +3,7 @@ local M = {}
 M.parse_command = function(cmd)
     for i, item in pairs(cmd) do
         -- Only special case %, other wildcards aren't really relevant.
-        if item[1] == '%' then
+        if string.sub(item, 1, 1) == '%' then
             cmd[i] = vim.api.nvim_buf_get_name(0)
         end
     end
