@@ -8,7 +8,7 @@ M.start_timer = function(bufnr, cmd)
     local msg = string.format('[%02d:%02d] Running command %s...', 0, 0, cmd)
 
     -- Set initial message and clear all previously run commands.
-    vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { msg })
+    vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { msg, '' })
 
     timer:start(
         0,
@@ -51,7 +51,7 @@ M.start_job = function(bufnr, cmd, cwd)
             vim.schedule(function()
                 for _, value in pairs(lines) do
                     if value ~= '' then
-                        vim.api.nvim_buf_set_lines(bufnr, -1, -1, false, { value })
+                        vim.api.nvim_buf_set_lines(bufnr, 2, -1, false, { value })
                     end
                 end
             end)
@@ -60,7 +60,7 @@ M.start_job = function(bufnr, cmd, cwd)
             vim.schedule(function()
                 for _, value in pairs(lines) do
                     if value ~= '' then
-                        vim.api.nvim_buf_set_lines(bufnr, -1, -1, false, { value })
+                        vim.api.nvim_buf_set_lines(bufnr, 2, -1, false, { value })
                     end
                 end
             end)
@@ -70,7 +70,7 @@ M.start_job = function(bufnr, cmd, cwd)
 
             if code == 127 then
                 local value = '...Looks like cmd `' .. cmd .. "` isn't executable?"
-                vim.api.nvim_buf_set_lines(bufnr, 1, -1, false, { value })
+                vim.api.nvim_buf_set_lines(bufnr, 2, -1, false, { value })
             end
         end,
     }
